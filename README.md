@@ -11,12 +11,17 @@ A Flutter application for managing tenants and rooms efficiently.
 ✅ Export to CSV – Download tenant data as a CSV file (Windows support).
 
 📸 Screenshots
-### DARK MODE
-![Home Screen1](assets/dark_tenant.jpeg)
-![Home Screen2](assets/dark_room.jpeg)
-![Home Screen3](assets/dark_drawer.jpeg)
-### LIGHT MODE
 
-![Home Screen4](assets/light_tenant.jpeg)
-![Home Screen5](assets/light_room.jpeg)
-![Home Screen6](assets/light_drawer.jpeg)
+### DARK MODE
+<div style="display: inline-block; margin-right: 50px;">
+  <img src="assets/dark_tenant.jpeg" width="200"/>
+  <img src="assets/dark_room.jpeg" width="200"/>
+  <img src="assets/dark_drawer.jpeg" width="200"/>
+</div>
+
+### LIGHT MODE
+<div style="display: inline-block;">
+  <img src="assets/light_tenant.jpeg" width="200"/>
+  <img src="assets/light_room.jpeg" width="200"/>
+  <img src="assets/light_drawer.jpeg" width="200"/>
+</div>
