@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lotus/navigation_bloc.dart';
-import 'package:lotus/navigation_event.dart';
-import 'package:lotus/navigation_state.dart';
+import 'package:Lotus/navigation_bloc.dart';
+import 'package:Lotus/navigation_event.dart';
+import 'package:Lotus/navigation_state.dart';
 import 'firebase_options.dart';
 import 'tenant_page.dart';
 import 'rooms_page.dart';
