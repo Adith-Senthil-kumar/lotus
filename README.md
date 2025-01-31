@@ -9,7 +9,7 @@ A Flutter application for managing tenants and rooms efficiently.
 ✅ Search Functionality – Quickly find tenants and rooms using a built-in search feature.
 ✅ Dark Mode Support – Seamless switching between light and dark themes.
 ✅ Export to CSV – Download tenant data as a CSV file (Windows support).
-
+✅ EB page to track EB readings of rooms.
 📸 Screenshots
 
 ### DARK MODE
@@ -17,6 +17,7 @@ A Flutter application for managing tenants and rooms efficiently.
   <img src="assets/dark_tenant.jpeg" width="200"/>
   <img src="assets/dark_room.jpeg" width="200"/>
   <img src="assets/dark_drawer.jpeg" width="200"/>
+  <img src="assets/dark_eb.jpeg" width="200"/>
 </div>
 
 ### LIGHT MODE
@@ -24,4 +25,5 @@ A Flutter application for managing tenants and rooms efficiently.
   <img src="assets/light_tenant.jpeg" width="200"/>
   <img src="assets/light_room.jpeg" width="200"/>
   <img src="assets/light_drawer.jpeg" width="200"/>
+  <img src="assets/light_eb.jpeg" width="200"/>
 </div>
