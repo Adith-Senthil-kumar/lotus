@@ -1,3 +1,4 @@
+import 'package:Lotus/eb_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -85,7 +86,6 @@ class _LotusAppState extends State<LotusApp> {
     );
   }
 }
-
 class NavigationPage extends StatefulWidget {
   final Function(bool) toggleTheme;
 
@@ -140,6 +140,16 @@ class _NavigationPageState extends State<NavigationPage> {
                   fontSize: 24,
                 ),
               ),
+            ),
+            ListTile(
+              title: Text('EB Page'),
+              onTap: () {
+                Navigator.pop(context); // Close the drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EbPage()),
+                );
+              },
             ),
             // Switch Theme option in the menu
             SwitchListTile(

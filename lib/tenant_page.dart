@@ -104,12 +104,8 @@ class _TenantPageState extends State<TenantPage> {
                       IconButton(
                         icon: Icon(Icons.delete, color: Colors.red),
                         onPressed: () async {
-                          await tenantsCollection.doc(tenant.id).delete();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content: Text('Tenant deleted successfully!')),
-                          );
-                        },
+                        _showDeleteConfirmationDialog(context, tenant.id);
+                      },
                       ),
                     ],
                   ),
@@ -252,6 +248,34 @@ class _TenantPageState extends State<TenantPage> {
       },
     );
   }
+  Future<void> _showDeleteConfirmationDialog(BuildContext context, String tenantId) async {
+  bool confirmDelete = await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Confirm Deletion'),
+        content: Text('Are you sure you want to delete this tenant?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false), // User presses cancel
+            child: Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop(true); // User presses delete
+            },
+            child: Text('Delete', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      );
+    },
+  ) ?? false;
+
+  if (confirmDelete) {
+    // Proceed with the delete action
+    await tenantsCollection.doc(tenantId).delete();
+  }
+}
 
   void _showEditTenantDialog(
       BuildContext context, String tenantId, Map<String, dynamic> tenantData) {
@@ -379,15 +403,15 @@ class TenantSearchDelegate extends SearchDelegate<String> {
     ];
   }
 
- @override
-Widget buildLeading(BuildContext context) {
-  return IconButton(
-    icon: Icon(Icons.arrow_back),
-    onPressed: () {
-      close(context, ''); // Use an empty string instead of null
-    },
-  );
-}
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, ''); // Use an empty string instead of null
+      },
+    );
+  }
 
   @override
   Widget buildResults(BuildContext context) {
@@ -475,11 +499,7 @@ Widget buildLeading(BuildContext context) {
                     IconButton(
                       icon: Icon(Icons.delete, color: Colors.red),
                       onPressed: () async {
-                        await tenantsCollection.doc(tenant.id).delete();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text('Tenant deleted successfully!')),
-                        );
+                        _showDeleteConfirmationDialog(context, tenant.id);
                       },
                     ),
                   ],
@@ -491,6 +511,37 @@ Widget buildLeading(BuildContext context) {
       },
     );
   }
+
+  Future<void> _showDeleteConfirmationDialog(BuildContext context, String tenantId) async {
+  bool confirmDelete = await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Confirm Deletion'),
+        content: Text('Are you sure you want to delete this tenant?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false), // User presses cancel
+            child: Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop(true); // User presses delete
+            },
+            child: Text('Delete', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      );
+    },
+  ) ?? false;
+
+  if (confirmDelete) {
+    // Proceed with the delete action
+    await tenantsCollection.doc(tenantId).delete();
+  }
+}
+
+  
 
   void _showEditTenantDialog(
       BuildContext context, String tenantId, Map<String, dynamic> tenantData) {

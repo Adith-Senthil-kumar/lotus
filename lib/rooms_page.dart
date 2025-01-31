@@ -7,6 +7,8 @@ class RoomsPage extends StatefulWidget {
 }
 
 class _RoomsPageState extends State<RoomsPage> {
+  final CollectionReference ebCollection =
+      FirebaseFirestore.instance.collection('eb');
   final CollectionReference roomsCollection =
       FirebaseFirestore.instance.collection('rooms');
   final CollectionReference tenantsCollection =
@@ -147,9 +149,8 @@ class _RoomsPageState extends State<RoomsPage> {
   }
 
   void _assignTenant(String roomId) async {
-    QuerySnapshot availableTenants = await tenantsCollection
-        .where('status', isEqualTo: false)
-        .get();
+    QuerySnapshot availableTenants =
+        await tenantsCollection.where('status', isEqualTo: false).get();
 
     if (availableTenants.docs.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -237,23 +238,46 @@ class _RoomsPageState extends State<RoomsPage> {
     }
   }
 
-  void _deleteRoom(String roomId) async {
-    try {
-      await roomsCollection.doc(roomId).delete();
-      setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Room deleted successfully!')),
+  void _deleteRoom(String roomId) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Confirm Deletion'),
+        content: Text('Are you sure you want to delete this room? This action cannot be undone.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(), // Cancel
+            child: Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              try {
+                await roomsCollection.doc(roomId).delete();
+                setState(() {});
+                Navigator.of(context).pop(); // Close dialog
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Room deleted successfully!')),
+                );
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Failed to delete room: $e')),
+                );
+              }
+            },
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            child: Text('Delete'),
+          ),
+        ],
       );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to delete room: $e')),
-      );
-    }
-  }
+    },
+  );
+}
 
   void _showAddRoomDialog() {
     final TextEditingController _roomNumberController = TextEditingController();
-    final TextEditingController _maxCapacityController = TextEditingController();
+    final TextEditingController _maxCapacityController =
+        TextEditingController();
 
     showDialog(
       context: context,
@@ -290,6 +314,9 @@ class _RoomsPageState extends State<RoomsPage> {
                     await roomsCollection.add({
                       'roomNumber': roomNumber,
                       'maxCapacity': maxCapacity,
+                    });
+                    await ebCollection.add({
+                      'roomNumber': roomNumber,
                     });
 
                     setState(() {});
